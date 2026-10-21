@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>在德中国医护人员线上预填问卷 · 安妮中德</title>
+<style>
+:root{--red:#C2191F;--red-dk:#8A1115;--red-lt:#FBEAEA;--dk:#1A1A1A;--md:#555;--lt:#888;--bd:#E8E8E8;--bg:#F5F5F5;--wh:#fff;--bg2:#FAFAFA;--gold:#B8893E;--gold-lt:#F5EBD9;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'PingFang SC','Noto Sans SC','Source Han Sans SC','Microsoft YaHei',Roboto,sans-serif;background:var(--bg);color:var(--dk);min-height:100vh;}
+.wrap{max-width:640px;margin:0 auto;}
+.hd{background:var(--red);position:relative;overflow:hidden;}
+.hd:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 22px,rgba(255,255,255,.04) 22px,rgba(255,255,255,.04) 23px);}
+.arc1{position:absolute;bottom:-70px;right:-50px;width:210px;height:210px;border:32px solid rgba(255,255,255,.09);border-radius:50%;}
+.arc2{position:absolute;bottom:-130px;right:-110px;width:330px;height:330px;border:24px solid rgba(255,255,255,.05);border-radius:50%;}
+.hd-in{position:relative;z-index:2;padding:22px 18px 18px;}
+.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.logo-tri{width:38px;height:38px;background:#fff;border-radius:6px;padding:4px;flex-shrink:0;}
+.logo-tri img{width:100%;height:100%;object-fit:contain;display:block;}
+.co{color:#fff;line-height:1.3;}.co b{font-size:15px;font-weight:600;display:block;}.co i{font-size:10.5px;font-style:normal;opacity:.75;letter-spacing:.3px;}
+.badge{display:inline-block;background:rgba(255,255,255,.16);color:#fff;font-size:11px;padding:3px 12px;border-radius:20px;margin-bottom:10px;letter-spacing:.5px;}
+.hd h1{color:#fff;font-size:21px;font-weight:700;line-height:1.4;}
+.hd .sub{color:rgba(255,255,255,.8);font-size:12.5px;margin-top:6px;}
+.prog{height:3px;background:rgba(255,255,255,.18);position:relative;z-index:2;}
+.prog i{display:block;height:100%;background:#fff;width:0;transition:width .4s;}
+.sec{background:var(--wh);border-left:4px solid var(--red);padding:13px 16px;margin:14px 14px 0;border-radius:0 10px 10px 0;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+.sec h2{font-size:15px;color:var(--red);}
+.sec p{font-size:12px;color:var(--lt);margin-top:2px;}
+.qc{background:var(--wh);margin:10px 14px 0;border-radius:12px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.06);border:1.5px solid transparent;}
+.qc.err{border-color:var(--red);border-width:2px;background:#FFF7F7;animation:shake .4s;}
+@keyframes shake{0%,100%{transform:none}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.part.perr .pl{color:var(--red);}
+.part.perr .pl:after{content:'  ← 请填写';font-weight:600;}
+.part.perr .ti,.part.perr .opt{border-color:var(--red);background:#fff;}
+.qc.err .qn{animation:pulse 1s 2;}
+@keyframes pulse{50%{transform:scale(1.25)}}
+.ym{display:flex;gap:8px;}.ym .ti{flex:1;}
+select.ti{background-image:linear-gradient(45deg,transparent 50%,#999 50%),linear-gradient(135deg,#999 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px;}
+select.ti:disabled{opacity:.5;}
+.qhead{display:flex;align-items:flex-start;gap:8px;margin-bottom:4px;}
+.qn{background:var(--red);color:#fff;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0;margin-top:2px;}
+.qt{font-size:15px;font-weight:600;line-height:1.5;}
+.tag{display:inline-block;font-size:10.5px;color:var(--gold);background:var(--gold-lt);padding:1px 8px;border-radius:10px;margin-left:6px;font-weight:500;vertical-align:2px;}
+.qnote{font-size:12px;color:var(--lt);margin:4px 0 2px;line-height:1.6;}
+.part{margin-top:12px;}
+.pl{font-size:12.5px;color:var(--md);font-weight:600;margin-bottom:6px;}
+.pl em{font-style:normal;color:var(--lt);font-weight:400;}
+.opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--bd);border-radius:9px;background:var(--bg2);cursor:pointer;user-select:none;-webkit-user-select:none;font-size:14px;color:var(--md);line-height:1.4;flex:1 1 calc(50% - 4px);min-width:calc(50% - 4px);}
+.opts.wide .opt{flex-basis:100%;}
+.opt.sel{border-color:var(--red);background:var(--red-lt);color:var(--red-dk);font-weight:500;}
+.mk{width:18px;height:18px;border:2px solid #D0D0D0;border-radius:50%;flex-shrink:0;position:relative;background:#fff;}
+.multi .mk{border-radius:5px;}
+.opt.sel .mk{border-color:var(--red);background:var(--red);}
+.opt.sel .mk:after{content:'';position:absolute;left:50%;top:50%;width:6px;height:6px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);}
+.multi .opt.sel .mk:after{width:9px;height:5px;background:none;border-left:2px solid #fff;border-bottom:2px solid #fff;border-radius:0;transform:translate(-50%,-70%) rotate(-45deg);}
+.other{display:none;margin-top:8px;}
+.other.on{display:block;}
+.ti,select.ti{width:100%;border:1.5px solid var(--bd);border-radius:9px;padding:11px 13px;font-size:15px;font-family:inherit;color:var(--dk);background:var(--bg);outline:none;-webkit-appearance:none;appearance:none;}
+.ti:focus{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(194,25,31,.08);}
+.na{margin-top:12px;font-size:12.5px;color:var(--lt);display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;}
+.na .box{width:15px;height:15px;border:1.5px solid #C8C8C8;border-radius:4px;background:#fff;position:relative;}
+.qc.skip .na{color:var(--red);}
+.qc.skip .na .box{background:var(--red);border-color:var(--red);}
+.qc.skip .parts{opacity:.35;pointer-events:none;}
+.emsg{display:none;color:var(--red);font-size:12.5px;font-weight:600;margin-top:10px;}
+.qc.err .emsg{display:block;}
+.card{background:var(--wh);border-radius:12px;padding:17px;margin:14px 14px 0;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+.card h3{font-size:14px;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.card h3:before{content:'';width:4px;height:14px;background:var(--red);border-radius:2px;}
+.card p{font-size:13.5px;color:var(--md);line-height:1.85;}
+.card ul{padding-left:18px;font-size:13px;color:var(--md);line-height:1.85;}
+.consent{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:12px;border:1.5px solid var(--bd);border-radius:9px;cursor:pointer;background:var(--bg2);font-size:13.5px;color:var(--md);line-height:1.6;}
+.consent.sel{border-color:var(--red);background:var(--red-lt);color:var(--red-dk);}
+.consent .mk{border-radius:5px;margin-top:2px;}
+.consent.sel .mk{border-color:var(--red);background:var(--red);}
+.consent.sel .mk:after{content:'';position:absolute;left:50%;top:50%;width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-70%) rotate(-45deg);}
+.pg{display:none;padding-bottom:96px;}.pg.on{display:block;}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--bd);padding:11px 14px calc(11px + env(safe-area-inset-bottom));z-index:10;}
+.nav .in{max-width:612px;margin:0 auto;display:flex;gap:10px;}
+.btn{flex:1;padding:14px;border:none;border-radius:10px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none;}
+.btn-p{background:var(--red);color:#fff;}.btn-p:disabled{opacity:.55;}
+.btn-s{flex:0 0 84px;background:var(--bg);color:var(--md);border:1.5px solid var(--bd);font-size:14px;}
+.foot{text-align:center;font-size:11px;color:#AAA;margin:22px 14px 0;line-height:1.7;}
+.ty{padding:60px 24px;text-align:center;}
+.ty .c{width:66px;height:66px;border-radius:50%;background:var(--red-lt);color:var(--red);font-size:32px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.ty h2{font-size:21px;margin-bottom:12px;}
+.ty p{font-size:14px;color:var(--md);line-height:1.9;}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;font-size:13px;padding:10px 16px;border-radius:8px;display:none;z-index:20;max-width:86%;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hd"><div class="arc1"></div><div class="arc2"></div>
+  <div class="hd-in">
+    <div class="logo-row"><div class="logo-tri"><img src="data:image/png;base64,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" alt="安妮中德"></div>
+      <div class="co"><b>安妮中德</b><i>Annie Thing Is Possible</i></div></div>
+    <span class="badge">访谈前填写 · 约 3—5 分钟</span>
+    <h1>在德中国医护人员<br>线上预填问卷</h1>
+    <div class="sub" id="hdsub">封面 · 填写说明</div>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+</div>
+
+<div class="pg on" id="pg0">
+  <div class="card"><h3>填写说明</h3>
+    <p>请按真实情况填写；无特别说明为单选，多选题已标明。本表不填写姓名、证件号、收款账号或具体医院名称，不需上传证明；内容仅用于本次调研内部分析。</p>
+  </div>
+  <div class="qc" id="q-meta">
+    <div class="qhead"><span class="qn">编号</span><div class="qt">调研编号</div></div>
+    <div class="qnote">调研编号由安妮中德提供，见您收到的问题清单。</div>
+    <div class="part"><input class="ti" id="rid" placeholder="请输入调研编号" autocomplete="off"></div>
+    <div class="consent" id="consent"><span class="mk"></span><span>我已阅读上述说明，同意本问卷内容用于本次调研内部分析。</span></div>
+    <div class="emsg" id="metaerr">请填写调研编号并勾选同意</div>
+  </div>
+  <div class="foot">安尼中德管理咨询（深圳）有限公司<br>如有疑问请联系 info@anniezhongde.cn</div>
+</div>
+<div id="pages"></div>
+<div class="pg" id="pgty"><div class="ty"><div class="c">✓</div><h2>提交成功，谢谢您！</h2>
+  <p>提交后由访谈员核对；面谈主要交流具体经历，不必重复逐项询问本表。</p>
+  <p style="margin-top:14px;font-size:12.5px;color:#888">如需修改答案，请直接联系访谈员。</p></div></div>
+</div>
+<div class="nav" id="nav"><div class="in"><button class="btn btn-s" id="back">上一步</button><button class="btn btn-p" id="next">开始填写</button></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const ENDPOINT='https://formspree.io/f/mdajkaka';
+const PROVINCES=['北京市','天津市','上海市','重庆市','河北省','山西省','内蒙古自治区','辽宁省','吉林省','黑龙江省','江苏省','浙江省','安徽省','福建省','江西省','山东省','河南省','湖北省','湖南省','广东省','广西壮族自治区','海南省','四川省','贵州省','云南省','西藏自治区','陕西省','甘肃省','青海省','宁夏回族自治区','新疆维吾尔自治区','香港特别行政区','澳门特别行政区','台湾'];
+const CITIES={
+ '巴登-符腾堡 Baden-Württemberg':['Stuttgart','Mannheim','Karlsruhe','Freiburg im Breisgau','Heidelberg','Ulm','Heilbronn','Pforzheim','Reutlingen','Esslingen am Neckar','Ludwigsburg','Tübingen','Konstanz','Villingen-Schwenningen','Aalen'],
+ '巴伐利亚 Bayern':['München','Nürnberg','Augsburg','Regensburg','Ingolstadt','Würzburg','Fürth','Erlangen','Bamberg','Bayreuth','Landshut','Rosenheim','Kempten','Passau','Aschaffenburg','Schweinfurt'],
+ '柏林 Berlin':['Berlin'],
+ '勃兰登堡 Brandenburg':['Potsdam','Cottbus','Brandenburg an der Havel','Frankfurt (Oder)','Oranienburg','Eberswalde','Neuruppin'],
+ '不来梅 Bremen':['Bremen','Bremerhaven'],
+ '汉堡 Hamburg':['Hamburg'],
+ '黑森 Hessen':['Frankfurt am Main','Wiesbaden','Kassel','Darmstadt','Offenbach am Main','Hanau','Gießen','Marburg','Fulda','Rüsselsheim','Bad Homburg'],
+ '梅克伦堡-前波莫瑞 Mecklenburg-Vorpommern':['Rostock','Schwerin','Neubrandenburg','Stralsund','Greifswald','Wismar'],
+ '下萨克森 Niedersachsen':['Hannover','Braunschweig','Oldenburg','Osnabrück','Wolfsburg','Göttingen','Salzgitter','Hildesheim','Delmenhorst','Wilhelmshaven','Lüneburg','Celle'],
+ '北莱茵-威斯特法伦 Nordrhein-Westfalen':['Köln','Düsseldorf','Dortmund','Essen','Duisburg','Bochum','Wuppertal','Bielefeld','Bonn','Münster','Mönchengladbach','Gelsenkirchen','Aachen','Krefeld','Oberhausen','Hagen','Hamm','Mülheim an der Ruhr','Leverkusen','Solingen','Paderborn','Siegen'],
+ '莱茵兰-普法尔茨 Rheinland-Pfalz':['Mainz','Ludwigshafen am Rhein','Koblenz','Trier','Kaiserslautern','Worms','Neuwied','Speyer','Landau in der Pfalz'],
+ '萨尔 Saarland':['Saarbrücken','Neunkirchen','Homburg','Völklingen','Saarlouis'],
+ '萨克森 Sachsen':['Leipzig','Dresden','Chemnitz','Zwickau','Plauen','Görlitz','Freiberg','Bautzen'],
+ '萨克森-安哈尔特 Sachsen-Anhalt':['Halle (Saale)','Magdeburg','Dessau-Roßlau','Lutherstadt Wittenberg','Stendal','Halberstadt'],
+ '石勒苏益格-荷尔斯泰因 Schleswig-Holstein':['Kiel','Lübeck','Flensburg','Neumünster','Norderstedt','Elmshorn'],
+ '图林根 Thüringen':['Erfurt','Jena','Gera','Weimar','Gotha','Eisenach','Suhl'],
+};
+const STATES=Object.keys(CITIES);
+const yrs=(a,b)=>{const r=[];for(let y=b;y>=a;y--)r.push(String(y));return r;};
+const MONTHS=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+const PAYGRADES=['P5','P6','P7','P8','P9','P10','P11','P12','P13','P14','P15','P16','E5','E6','E7','E8','E9a','E9b','E9c','E10','E11','E12','E13','E14','E15','Ä1','Ä2','Ä3','Ä4','KR（教会／其他体系）','其他','不清楚'];
+const STEPS=['Stufe 1','Stufe 2','Stufe 3','Stufe 4','Stufe 5','Stufe 6','不清楚'];
+const SALARY=['30,000 € 以下','30,000 – 34,999 €','35,000 – 39,999 €','40,000 – 44,999 €','45,000 – 49,999 €','50,000 – 54,999 €','55,000 – 59,999 €','60,000 – 69,999 €','不清楚'];
+
+// 题型：s 单选 m 多选 t 文本 n 数字 sel 下拉 ym 年+月 ；opts 中以 * 结尾表示带补充输入
+// opt:true 选填；show:{p,in|notIn} 条件显示（隐藏时不校验、不提交）；city:i 联动第 i 部分的州
+const SECTIONS=[
+ {h:'A 教育与资格背景',p:'第一部分 · 共四部分',qs:[
+  {id:'01',t:'年龄',parts:[{k:'s',o:['20岁以下','20–24岁','25–29岁','30–34岁','35–39岁','40岁及以上']}]},
+  {id:'02',t:'性别',parts:[{k:'s',o:['男','女']}]},
+  {id:'03',t:'国内成长地区',parts:[{k:'sel',l:'省／自治区／直辖市',o:PROVINCES},{k:'s',o:['城市','县城','乡镇／农村']}]},
+  {id:'04',t:'主要医护专业学历及取得地',parts:[{k:'s',l:'学历',o:['中专','大专','本科','硕士及以上','其他*']},{k:'s',l:'状态',o:['已取得','在读／未取得','其他*']},{k:'s',l:'取得地',o:['中国','德国','其他*']},{k:'sel',l:'取得／预计年份',o:yrs(1975,2030)}]},
+  {id:'05',t:'所学专业',parts:[{k:'s',o:['护理','临床医学','康复','医学影像','检验','其他医护专业*']}]},
+  {id:'06',t:'中国专业资格情况',parts:[{k:'s',w:1,o:['护士资格／执业相关资格','其他医护资格*','准备／报考中','不适用']},
+    {k:'t',l:'证书类型',ph:'例如 护士执业证书',show:{p:0,in:['护士资格／执业相关资格','其他医护资格']}},
+    {k:'sel',l:'取得年份',o:yrs(1975,2026),show:{p:0,in:['护士资格／执业相关资格','其他医护资格']}}]},
+  {id:'07',t:'德国职业资格认可情况',parts:[{k:'s',w:1,o:['已完成认可并取得执业许可','审核中','正在完成适应／考试等补足条件','尚未申请','不适用','不清楚']},
+    {k:'sel',l:'对应职业',o:['护士 Pflegefachfrau／Pflegefachmann','医生 Arzt／Ärztin','物理治疗师 Physiotherapeut／in','医学技术员 MT（影像／检验）','助产士 Hebamme','其他'],show:{p:0,notIn:['不适用','不清楚']}},
+    {k:'sel',l:'取得年份',o:yrs(1990,2026),show:{p:0,in:['已完成认可并取得执业许可']}}]},
+  {id:'08',t:'最高已取得德语证书',parts:[{k:'s',o:['无','A1','A2','B1','B2','C1及以上']},
+    {k:'sel',l:'考试机构',opt:true,o:['歌德学院 Goethe','telc','ÖSD','TestDaF','DSH','其他'],show:{p:0,notIn:['无']}},
+    {k:'ym',l:'通过年月',y:yrs(2000,2026),show:{p:0,notIn:['无']}},
+    {k:'s',l:'语言考试',o:['已通过','准备中','未通过']}]},
+ ]},
+ {h:'B 赴德路径',p:'第二部分 · 共四部分',qs:[
+  {id:'09',t:'抵德及工作时间',parts:[{k:'sel',l:'抵德年份',o:yrs(1990,2026)},{k:'sel',l:'开始在德医护工作年份',o:['尚未开始'].concat(yrs(1990,2026))},{k:'s',l:'来德前',w:1,o:['刚毕业','医护工作不足2年','医护工作2–5年','医护工作5年及以上','其他工作*']}]},
+  {id:'10',t:'最初知道赴德路径的渠道',multi:1,parts:[{k:'m',o:['学校／老师','亲友／同学','咨询／中介','小红书','其他社交平台*','招聘／雇主','其他*']}]},
+  {id:'11',t:'实际赴德方式',multi:1,parts:[{k:'m',o:['主要DIY','咨询／中介','学校项目','德国雇主直招','亲友协助','其他*']}]},
+  {id:'12',t:'开始认真准备至抵德的时间',parts:[{k:'s',o:['小于6个月','6–12个月','1–2年','2–3年','3年及以上']}]},
+  {id:'13',t:'抵德至取得德国正式职业资格的时间',parts:[{k:'s',o:['抵德前已取得','小于6个月','6–12个月','1–2年','2年及以上','尚未完成','不适用']}]},
+  {id:'14',t:'赴德整体费用',either:[0,1],parts:[{k:'s',l:'请统一按人民币估算',o:['小于1万','1–3万','3–5万','5–10万','10–15万','15万及以上']},{k:'n',l:'如只记得欧元金额可填（欧元，无需自行换算）',opt:true,ph:'例如 6000'},{k:'s',l:'范围',o:['至抵德','含初期生活','含至资格认可','其他*']}]},
+  {id:'15',t:'费用包含项目',multi:1,parts:[{k:'m',o:['咨询／中介','语言培训','考试','翻译／公证','认证','签证','机票','初期住宿生活','其他*']},
+    {k:'n',l:'其中咨询／中介费',ph:'金额',show:{p:0,in:['咨询／中介']}},
+    {k:'s',l:'币种',o:['人民币','欧元'],show:{p:0,in:['咨询／中介']}}]},
+ ]},
+ {h:'C 当前工作',p:'第三部分 · 共四部分',qs:[
+  {id:'16',t:'居住地及居留类型',parts:[{k:'sel',l:'州',o:STATES},{k:'sel',l:'城市',opt:true,city:0,o:[]},{k:'s',l:'居留类型',w:1,o:['资格认可／补足措施居留','工作居留','永久居留','德国／欧盟国籍','其他*']}]},
+  {id:'17',t:'当前机构类型',parts:[{k:'s',w:1,o:['公立医院','私立／商业医院','教会／非营利医院','养老／长期照护','其他*']}]},
+  {id:'18',t:'合同及工时',parts:[{k:'s',l:'合同',o:['无固定期限','固定期限*']},{k:'s',l:'工时',o:['全职','兼职']},{k:'n',l:'每周小时',opt:true,ph:'例如 38.5'}],otherPh:{'固定期限':'期限（年）'}},
+  {id:'19',t:'工资体系',optq:1,parts:[{k:'s',o:['TVöD','TV-L','教会AVR','机构自有','不清楚'],opt:true},{k:'sel',l:'工资组',opt:true,o:PAYGRADES},{k:'sel',l:'档级',opt:true,o:STEPS},{k:'sel',l:'税前年薪范围（欧元，含年终奖等固定发放部分）',opt:true,o:SALARY},{k:'s',l:'是否含轮班／夜班补贴',o:['是','否'],opt:true}]},
+  {id:'20',t:'未来一至两年的职业想法',multi:1,parts:[{k:'m',o:['保持现状','换机构','换城市／州','进修／专科','转管理／其他职业','考虑回国','未确定']}]},
+  {id:'21',t:'目前最需要支持的领域',multi:1,max:3,parts:[{k:'m',o:['居留／外管局','永久居留','探亲／家庭团聚','跨境汇款','税务','法律','福利保障','租房／置业','婚姻家庭','职业发展','语言融入','社交情绪','兼职机会','其他*']}]},
+  {id:'22',t:'目前兼职情况',parts:[{k:'s',w:1,o:['无','已有Minijob','其他雇佣兼职*','独立接单／自营*']}],otherPh:{'其他雇佣兼职':'具体职业（选填）','独立接单／自营':'具体内容（选填）'}},
+  {id:'23',t:'是否愿意了解有偿经验交流合作',note:'仅了解意向，不构成合作或聘用承诺，不影响调研酬谢。',parts:[{k:'s',w:1,o:['愿意','有兴趣但时间有限','想先了解规则','暂不确定','不考虑']}]},
+  {id:'24',t:'如需澄清本次问卷 是否同意再次联系',note:'仅限本次调研澄清，不表示同意营销或顾问合作。',parts:[{k:'s',o:['同意','不同意']}]},
+ ]},
+ {h:'D 预约面谈时间',p:'最后一步 · 便于我们与您约定腾讯会议时间',qs:[
+  {id:'25',t:'您方便的面谈时间',multi:1,note:'均为德国时间，可多选；我们会据此与您确认具体时间。',parts:[
+    {k:'m',l:'日期倾向',o:['工作日','周末']},
+    {k:'m',l:'时间段',o:['9:00–11:00','14:00–17:00','19:00–21:00']},
+    {k:'t',l:'其他说明',opt:true,ph:'例如 下周三起方便、周五除外'}]},
+ ]},
+];
+
+const $=s=>document.querySelector(s), esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const state={}; // `${qid}_${pi}` -> 值；ym 另存 `${key}m`；补充输入 `${key}#${选项}`
+const opt=(o)=>`<option value="">请选择</option>${o.map(x=>`<option>${esc(x)}</option>`).join('')}`;
+SECTIONS.forEach((sec,si)=>{
+  let h=`<div class="pg" id="pg${si+1}"><div class="sec"><h2>${sec.h}</h2><p>${sec.p}</p></div>`;
+  sec.qs.forEach(q=>{
+    const tags=(q.multi?`<span class="tag">${q.max?'最多选'+q.max+'项':'多选'}</span>`:'')+(q.optq?'<span class="tag">选填</span>':'');
+    h+=`<div class="qc" id="q${q.id}"><div class="qhead"><span class="qn">${q.id}</span><div class="qt">${esc(q.t)}${tags}</div></div>`;
+    if(q.note)h+=`<div class="qnote">${esc(q.note)}</div>`;
+    q.parts.forEach((p,pi)=>{
+      const key=q.id+'_'+pi;
+      h+=`<div class="part" id="p${key}">`;
+      if(p.l)h+=`<div class="pl">${esc(p.l)}${p.opt&&!q.optq?' <em>（选填）</em>':''}</div>`;
+      if(p.k==='t')h+=`<input class="ti" data-k="${key}" placeholder="${esc(p.ph||'请填写')}">`;
+      else if(p.k==='n')h+=`<input class="ti" data-k="${key}" inputmode="decimal" placeholder="${esc(p.ph||'请填写')}">`;
+      else if(p.k==='sel')h+=`<select class="ti" data-k="${key}">${opt(p.o)}</select>`+(p.city!==undefined?`<input class="ti other" data-ok="${key}" data-ov="其他城市" placeholder="请填写城市名称">`:'');
+      else if(p.k==='ym')h+=`<div class="ym"><select class="ti" data-k="${key}">${opt(p.y).replace('请选择','年份')}</select><select class="ti" data-k="${key}m">${opt(MONTHS).replace('请选择','月份')}</select></div>`;
+      else{
+        h+=`<div class="opts ${p.k==='m'?'multi':''} ${p.w?'wide':''}">`;
+        p.o.forEach(o=>{const lab=o.replace(/\*$/,'');h+=`<div class="opt" data-k="${key}" data-v="${esc(lab)}" data-x="${o.endsWith('*')?1:0}"><span class="mk"></span><span>${esc(lab)}</span></div>`;});
+        h+=`</div>`;
+        p.o.filter(o=>o.endsWith('*')).forEach(o=>{const lab=o.slice(0,-1);h+=`<input class="ti other" data-ok="${key}" data-ov="${esc(lab)}" placeholder="${esc((q.otherPh&&q.otherPh[lab])||'请注明'+(lab.startsWith('其他')?'':'（'+lab+'）'))}">`;});
+      }
+      h+=`</div>`;
+    });
+    h+=`<div class="emsg">${q.max?'请至少选择一项，最多三项':'请完成标红的部分'}</div></div>`;
+  });
+  h+=`</div>`;
+  $('#pages').insertAdjacentHTML('beforeend',h);
+});
+
+function findQ(id){for(const s of SECTIONS)for(const q of s.qs)if(q.id===id)return q;}
+function shown(q,p){
+  if(!p.show)return true;
+  const v=state[q.id+'_'+p.show.p];
+  const has=x=>Array.isArray(v)?v.includes(x):v===x;
+  if(p.show.in)return p.show.in.some(has);
+  if(p.show.notIn)return !!(v&&(Array.isArray(v)?v.length:1))&&!p.show.notIn.some(has);
+  return true;
+}
+function refresh(qid){
+  const q=findQ(qid);
+  q.parts.forEach((p,pi)=>{
+    const key=qid+'_'+pi;
+    $('#p'+key).style.display=shown(q,p)?'':'none';
+    if(p.city!==undefined){
+      const st=state[qid+'_'+p.city],sel=document.querySelector(`select[data-k="${key}"]`);
+      const list=st?CITIES[st].concat(['其他城市']):[];
+      const want=opt(list);
+      if(sel.dataset.for!==st){sel.innerHTML=want;sel.dataset.for=st||'';sel.disabled=!st;if(!list.includes(state[key]))state[key]='';sel.value=state[key]||'';}
+      const oth=document.querySelector(`.other[data-ok="${key}"]`);oth.classList.toggle('on',state[key]==='其他城市');
+    }
+  });
+}
+function paint(k){
+  const v=state[k];
+  document.querySelectorAll(`.opt[data-k="${k}"]`).forEach(el=>{
+    const on=Array.isArray(v)?v.includes(el.dataset.v):v===el.dataset.v;
+    el.classList.toggle('sel',on);
+    if(el.dataset.x==='1'){const inp=document.querySelector(`.other[data-ok="${k}"][data-ov="${el.dataset.v}"]`);inp.classList.toggle('on',on);}
+  });
+}
+function touch(qid,key){
+  refresh(qid);
+  const pe=$('#p'+key.replace(/m$/,''));if(pe)pe.classList.remove('perr');
+  const qc=$('#q'+qid);if(qc&&!qc.querySelector('.part.perr'))qc.classList.remove('err');
+  save();
+}
+document.addEventListener('click',e=>{
+  const o=e.target.closest('.opt');
+  if(o){
+    const k=o.dataset.k,v=o.dataset.v,multi=o.parentElement.classList.contains('multi');
+    const qid=k.split('_')[0],q=findQ(qid),p=q.parts[+k.split('_')[1]];
+    if(multi){
+      const arr=state[k]||[];const i=arr.indexOf(v);
+      if(i>=0)arr.splice(i,1);else{if(q.max&&arr.length>=q.max){toast('最多选择'+q.max+'项');return;}arr.push(v);}
+      state[k]=arr;
+    }else state[k]=(state[k]===v&&(p.opt||q.optq))?'':v;
+    paint(k);touch(qid,k);return;
+  }
+  if(e.target.closest('#consent')){state.consent=!state.consent;$('#consent').classList.toggle('sel',state.consent);$('#q-meta').classList.remove('err');save();}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.id==='rid'){state.rid=t.value;$('#q-meta').classList.remove('err');save();return;}
+  if(t.dataset.ok){state[t.dataset.ok+'#'+t.dataset.ov]=t.value;save();return;}
+  if(t.dataset.k&&t.tagName!=='SELECT'){state[t.dataset.k]=t.value;touch(t.dataset.k.split('_')[0],t.dataset.k);}
+});
+document.addEventListener('change',e=>{const t=e.target;if(t.tagName==='SELECT'&&t.dataset.k){state[t.dataset.k]=t.value;touch(t.dataset.k.split('_')[0],t.dataset.k);}});
+
+const filled=(k,p)=>{const v=state[k];if(p.k==='m')return Array.isArray(v)&&v.length>0;if(p.k==='ym')return !!(v&&state[k+'m']);return !!(v&&String(v).trim());};
+// 返回未完成的部分序号
+function missing(q){
+  if(q.optq)return [];
+  const out=[];
+  q.parts.forEach((p,pi)=>{
+    if(p.opt||!shown(q,p))return;
+    const k=q.id+'_'+pi;
+    if(q.either&&q.either.includes(pi)){if(!q.either.some(j=>filled(q.id+'_'+j,q.parts[j])))out.push(pi);return;}
+    if(!filled(k,p))out.push(pi);
+  });
+  if(q.max&&(state[q.id+'_0']||[]).length>q.max)out.push(0);
+  return out;
+}
+const DKEY='asg_prefill_draft_v3';
+function save(){try{localStorage.setItem(DKEY,JSON.stringify(state));}catch(e){}}
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(DKEY)||'null');if(d)Object.assign(state,d);}catch(e){}
+  const qp=new URLSearchParams(location.search).get('id');if(qp)state.rid=qp;
+  $('#rid').value=state.rid||'';$('#consent').classList.toggle('sel',!!state.consent);
+  SECTIONS.forEach(s=>s.qs.forEach(q=>refresh(q.id)));
+  document.querySelectorAll('[data-k]').forEach(el=>{if(el.classList.contains('opt'))return;el.value=state[el.dataset.k]||'';});
+  document.querySelectorAll('.other').forEach(el=>{el.value=state[el.dataset.ok+'#'+el.dataset.ov]||'';});
+  const ks=new Set();document.querySelectorAll('.opt').forEach(el=>ks.add(el.dataset.k));ks.forEach(paint);
+  SECTIONS.forEach(s=>s.qs.forEach(q=>refresh(q.id)));
+}
+
+let cur=0;const N=SECTIONS.length;
+function go(i){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  if(i==='ty'){$('#pgty').classList.add('on');$('#nav').style.display='none';$('#prog').style.width='100%';$('#hdsub').textContent='已提交';window.scrollTo(0,0);return;}
+  cur=i;$('#pg'+i).classList.add('on');
+  $('#back').style.display=i===0?'none':'';
+  $('#next').textContent=i===0?'开始填写':(i===N?'确认提交':'下一步');
+  $('#prog').style.width=(i/N*100)+'%';
+  $('#hdsub').textContent=i===0?'封面 · 填写说明':SECTIONS[i-1].h+' · '+i+'/'+N;
+  window.scrollTo(0,0);
+}
+$('#back').onclick=()=>go(cur-1);
+$('#next').onclick=()=>{
+  if(cur===0){
+    if(!(state.rid&&state.rid.trim())||!state.consent){const m=$('#q-meta');m.classList.remove('err');void m.offsetWidth;m.classList.add('err');toast('请填写调研编号并勾选同意');return;}
+    go(1);return;
+  }
+  let first=null,cnt=0;
+  SECTIONS[cur-1].qs.forEach(q=>{
+    const qc=$('#q'+q.id),miss=missing(q);
+    qc.querySelectorAll('.part').forEach(el=>el.classList.remove('perr'));
+    qc.classList.remove('err');
+    if(miss.length){void qc.offsetWidth;qc.classList.add('err');miss.forEach(pi=>$('#p'+q.id+'_'+pi).classList.add('perr'));cnt++;if(!first)first=qc;}
+  });
+  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});toast('还有 '+cnt+' 题未完成，已标红');return;}
+  if(cur<N)go(cur+1);else submit();
+};
+function answer(q){
+  const out=[];
+  q.parts.forEach((p,pi)=>{
+    if(!shown(q,p))return;
+    const k=q.id+'_'+pi;let v=state[k];
+    if(p.k==='ym')v=v?v+'年'+(state[k+'m']||''):'';
+    else if(Array.isArray(v))v=v.map(x=>{const o=state[k+'#'+x];return o?x+'（'+o+'）':x;}).join('；');
+    else if(v&&state[k+'#'+v])v=v+'（'+state[k+'#'+v]+'）';
+    out.push([q.id+' '+q.t+(p.l?' · '+p.l:''),v||'—']);
+  });
+  return out;
+}
+async function submit(){
+  const btn=$('#next');btn.disabled=true;btn.textContent='提交中…';
+  const rid=state.rid.trim();
+  const payload={_subject:'预填问卷｜调研编号 '+rid,'调研编号':rid,'填写日期':new Date().toLocaleString('zh-CN',{timeZone:'Europe/Berlin'})+'（德国时间）','知情同意':'已勾选'};
+  SECTIONS.forEach(s=>s.qs.forEach(q=>answer(q).forEach(([k,v])=>payload[k]=v)));
+  try{
+    const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+    if(!r.ok)throw 0;
+    try{localStorage.removeItem(DKEY);}catch(e){}
+    go('ty');
+  }catch(e){btn.disabled=false;btn.textContent='确认提交';toast('提交失败，请检查网络后重试（答案已保留）');}
+}
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',2600);}
+load();go(0);
+</script>
+</body>
+</html>
